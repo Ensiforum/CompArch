@@ -11,9 +11,9 @@ private:
     int init_system;
     bool negative;
 public:
-    Converter(int system, const std::string& num);
+    Converter(int system, std::string num);
     std::string convertTo(int final_system);
-    void changeNumber(const std::string& num);
+    void changeNumber(std::string num);
 protected:
     int nextNumber(int final_system);
     int charToInt(char c) const;

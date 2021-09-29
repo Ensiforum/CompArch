@@ -1,10 +1,15 @@
 #include "converter.h"
 
 #include <QDebug>
+#include <algorithm>
 
-Converter::Converter(int system, const std::string& num)
+Converter::Converter(int system, std::string num)
 {
     init_system = system;
+    num.erase(std::remove_if(num.begin(), num.end(), [](unsigned char c){
+        return !((c >= '0' && c <= '9') ||
+                (c >= 'A' && c <= 'Z'));
+    }), num.end());
     negative = 0;
     number = QVector<int>();
     size_t start = 0;
@@ -14,9 +19,13 @@ Converter::Converter(int system, const std::string& num)
         number.push_back(charToInt(num[i]));
 }
 
-void Converter::changeNumber(const std::string &num)
+void Converter::changeNumber(std::string num)
 {
     number.clear();
+    num.erase(std::remove_if(num.begin(), num.end(), [](unsigned char c){
+        return !((c >= '0' && c <= '9') ||
+                (c >= 'A' && c <= 'Z'));
+    }), num.end());
     negative = 0;
     size_t start = 0;
     if(num[0] == '-')
